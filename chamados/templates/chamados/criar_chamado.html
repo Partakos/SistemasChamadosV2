@@ -1,0 +1,10 @@
+{% extends 'chamados/base.html' %}
+
+{% block content %}
+<h2>Criar Novo Chamado</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Criar Chamado</button>
+</form>
+{% endblock %}

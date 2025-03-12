@@ -1,0 +1,23 @@
+{% extends 'chamados/base.html' %}
+
+{% block content %}
+<h2>{{ chamado.titulo }}</h2>
+<p><strong>Status:</strong> {{ chamado.get_status_display }}</p>
+<p><strong>Prioridade:</strong> {{ chamado.get_prioridade_display }}</p>
+<p><strong>Descrição:</strong> {{ chamado.descricao }}</p>
+
+<h3>Comentários</h3>
+<ul>
+    {% for comentario in comentarios %}
+    <li><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.mensagem }}</li>
+    {% empty %}
+    <li>Nenhum comentário ainda.</li>
+    {% endfor %}
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Adicionar Comentário</button>
+</form>
+{% endblock %}

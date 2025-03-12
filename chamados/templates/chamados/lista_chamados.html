@@ -1,0 +1,34 @@
+{% extends 'chamados/base.html' %}
+
+{% block content %}
+<h2>Lista de Chamados</h2>
+<a href="{% url 'criar_chamado' %}" class="btn btn-primary">Criar Novo Chamado</a>
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Status</th>
+            <th>Prioridade</th>
+            <th>Data de Abertura</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for chamado in chamados %}
+        <tr>
+            <td>{{ chamado.titulo }}</td>
+            <td>{{ chamado.get_status_display }}</td>
+            <td>{{ chamado.get_prioridade_display }}</td>
+            <td>{{ chamado.data_abertura }}</td>
+            <td>
+                <a href="{% url 'detalhes_chamado' chamado.id %}" class="btn btn-info btn-sm">Detalhes</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">Nenhum chamado encontrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
