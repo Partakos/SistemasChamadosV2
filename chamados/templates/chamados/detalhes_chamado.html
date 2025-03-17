@@ -1,23 +1,47 @@
-{% extends 'chamados/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-<h2>{{ chamado.titulo }}</h2>
-<p><strong>Status:</strong> {{ chamado.get_status_display }}</p>
-<p><strong>Prioridade:</strong> {{ chamado.get_prioridade_display }}</p>
-<p><strong>Descrição:</strong> {{ chamado.descricao }}</p>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">{{ chamado.titulo }}</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Status:</strong> 
+                <span class="badge {% if chamado.status == 'aberto' %}bg-danger{% elif chamado.status == 'em_andamento' %}bg-warning{% else %}bg-success{% endif %}">
+                    {{ chamado.get_status_display }}
+                </span>
+            </p>
+            <p><strong>Prioridade:</strong> 
+                <span class="badge {% if chamado.prioridade == 'alta' %}bg-danger{% elif chamado.prioridade == 'media' %}bg-warning{% else %}bg-success{% endif %}">
+                    {{ chamado.get_prioridade_display }}
+                </span>
+            </p>
+            <p><strong>Descrição:</strong> {{ chamado.descricao }}</p>
+        </div>
+    </div>
 
-<h3>Comentários</h3>
-<ul>
-    {% for comentario in comentarios %}
-    <li><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.mensagem }}</li>
-    {% empty %}
-    <li>Nenhum comentário ainda.</li>
-    {% endfor %}
-</ul>
+    <div class="mt-4">
+        <h4 class="text-secondary">Comentários</h4>
+        {% if comentarios %}
+            <ul class="list-group">
+                {% for comentario in comentarios %}
+                    <li class="list-group-item">
+                        <strong>{{ comentario.usuario.username }}:</strong>
+                        <p class="mb-1">{{ comentario.mensagem }}</p>
+                        <small class="text-muted">{{ comentario.data_criacao }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">Nenhum comentário ainda.</p>
+        {% endif %}
+    </div>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Adicionar Comentário</button>
-</form>
+    <div class="mt-4">
+        <a href="{% url 'lista_chamados' %}" class="btn btn-secondary">
+            ⬅ Voltar para a lista de chamados
+        </a>
+    </div>
+</div>
 {% endblock %}

@@ -1,10 +1,31 @@
-{% extends 'chamados/base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<h2>Criar Novo Chamado</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Criar Chamado</button>
-</form>
+<div class="container mt-4">
+    <h2>Criar Chamado</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título:</label>
+            <input type="text" name="titulo" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição:</label>
+            <textarea name="descricao" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="prioridade" class="form-label">Prioridade:</label>
+            <select name="prioridade" class="form-select">
+                <option value="baixa">Baixa</option>
+                <option value="media" selected>Média</option>
+                <option value="alta">Alta</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Criar Chamado</button>
+    </form>
+</div>
 {% endblock %}

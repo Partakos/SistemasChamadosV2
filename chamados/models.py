@@ -13,7 +13,7 @@ class Chamado(models.Model):
         ('media', 'Média'),
         ('alta', 'Alta'),
     ]
-
+    
     titulo = models.CharField(max_length=200)
     descricao = models.TextField()
     data_abertura = models.DateTimeField(auto_now_add=True)
